@@ -30,21 +30,21 @@ func main() {
 func countArrangement(N int) int {
     visited := make([]bool, N + 1)
     count, total := 0,0
-    calculate(N, 1, visited, &count, &total)
+    calculate(N, N, &visited, &count, &total)
     fmt.Printf("%v/%v=%v\n", count,total,float64(count)/float64(total))
     return count
 }
-func calculate(N int, pos int, visited []bool, count *int, total *int) {
+func calculate(N int, pos int, visited *[]bool, count *int, total *int) {
     *total += 1
-    if pos > N {
+    if pos == 0 {
         *count++
         return
     }
     for i := 1; i <= N; i++ {
-        if (!visited[i] && (pos % i == 0 || i % pos == 0)) {
-            visited[i] = true
-            calculate(N, pos + 1, visited, count, total)
-            visited[i] = false
+        if (!(*visited)[i] && (pos % i == 0 || i % pos == 0)) {
+            (*visited)[i] = true
+            calculate(N, pos - 1, visited, count, total)
+            (*visited)[i] = false
         }
     }
 }
